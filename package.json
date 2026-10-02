@@ -1,0 +1,9 @@
+{
+  "name": "rivergate-city-builder",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A player-built city with integrated architecture, transit, freight, terrain and resident wellbeing",
+  "scripts": { "start": "node server.mjs --open" },
+  "dependencies": { "three": "0.180.0" }
+}

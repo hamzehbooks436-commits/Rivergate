@@ -1,0 +1,42 @@
+[
+  {
+    "id": "remaster_decor_bench",
+    "source": "Original Blender MCP decoration kit",
+    "objects": 15
+  },
+  {
+    "id": "remaster_decor_flowers",
+    "source": "Original Blender MCP decoration kit",
+    "objects": 98
+  },
+  {
+    "id": "remaster_decor_lamp",
+    "source": "Original Blender MCP decoration kit",
+    "objects": 10
+  },
+  {
+    "id": "remaster_decor_fountain",
+    "source": "Original Blender MCP decoration kit",
+    "objects": 15
+  },
+  {
+    "id": "remaster_decor_bunting",
+    "source": "Original Blender MCP decoration kit",
+    "objects": 30
+  },
+  {
+    "id": "remaster_decor_harvest",
+    "source": "Original Blender MCP decoration kit",
+    "objects": 54
+  },
+  {
+    "id": "remaster_decor_snowman",
+    "source": "Original Blender MCP decoration kit",
+    "objects": 16
+  },
+  {
+    "id": "remaster_decor_tree",
+    "source": "Original Blender MCP decoration kit",
+    "objects": 31
+  }
+]

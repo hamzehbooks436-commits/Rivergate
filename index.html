@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#243a30"><title>Rivergate Remastered · A city worth building</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23183b32'/%3E%3Cpath d='M12 48V24h12v24m5 0V12h12v36m5 0V30h8v18' fill='%23e5d39d'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./fullscreen.css"><link rel="stylesheet" href="./remaster.css">
+  <script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
+</head>
+<body>
+  <main id="app">
+    <div id="viewport"><canvas id="city-canvas" aria-label="Rivergate interactive 3D city. Left click to build or inspect; right drag to pan; wheel to zoom." tabindex="0"></canvas></div>
+    <header id="topbar" aria-label="Compact city status">
+      <div id="stats"></div>
+      <div class="time-controls"><button id="calendar" data-action="season-calendar" title="Open seasons and holidays" aria-label="Open seasons and holidays"></button><div class="speed-group"><button data-speed="0" title="Pause · Space">Ⅱ</button><button data-speed="1" title="Normal speed">▶</button><button data-speed="2" title="2× speed">2×</button><button data-speed="4" title="4× speed">4×</button></div></div>
+      <button class="icon-button" data-action="save" title="Save city · Ctrl+S">▣</button><button class="icon-button" data-action="help" title="Mayor’s handbook">?</button>
+    </header>
+    <aside id="tool-panel" class="panel" hidden><button class="panel-close" data-action="close-tools" aria-label="Close tool panel">×</button><div id="tool-content"></div></aside>
+    <aside id="inspector" class="panel" hidden><div id="inspector-content"></div></aside>
+    <div id="map-controls" class="panel"><button data-action="rotate-left" title="Rotate left · Q">↶</button><button data-action="home" title="Reset camera · Home">⌂</button><button data-action="rotate-right" title="Rotate right · E">↷</button><button data-action="night" title="Day / night">◐</button></div>
+    <div id="legend" class="panel" hidden></div>
+    <div id="quick-actions"><button data-action="fullscreen" title="Full screen · F" aria-label="Toggle full screen">⛶</button><button data-action="toggle-interface" title="Immersive view · H" aria-label="Hide interface">◉</button><button data-action="city-report" title="City wellbeing" aria-label="City wellbeing">♡</button><button data-action="city" title="City and saves" aria-label="City and saves">☰</button></div>
+    <button id="show-interface" data-action="toggle-interface" title="Show controls · H" hidden>◉ Show controls</button>
+    <div id="context-bubble" hidden></div>
+    <nav id="dock" class="panel" aria-label="City tools"></nav>
+    <footer id="statusbar"><span id="tool-hint">Left click to inspect · Right drag to pan · Scroll to zoom</span><span id="coordinates">152 × 152 REGION</span></footer>
+    <aside id="minimap" class="panel"><span class="eyebrow">REGION · 152 × 152</span><canvas id="region-map" width="152" height="152" aria-label="City region map. Click to explore." tabindex="0"></canvas><button data-action="region">Land & districts ↗</button></aside><div id="celebration" role="status"></div><div id="toast" role="status" aria-live="polite"></div>
+    <div id="loading"><span class="brand-mark">▥</span><div><b>Preparing your city</b><span id="loading-progress">Loading the architecture workshop…</span></div></div>
+    <dialog id="welcome"><div class="welcome-art"><div class="welcome-tower one"></div><div class="welcome-tower two"></div><div class="welcome-tower three"></div><span>YOUR LITTLE WORLD, WIDE OPEN</span></div><div class="welcome-copy"><span class="eyebrow">WELCOME TO RIVERGATE</span><h2>A city worth<br>building.</h2><p>Start small. Earn your expansion. Build a city with character, one neighbourhood at a time.</p><div class="start-settings"><label class="field">Difficulty<select id="start-difficulty"><option value="mayor">Mayor · deliberate growth</option><option value="relaxed">Relaxed · room to experiment</option><option value="expert">Expert · tight finances</option></select></label><label class="field">Scenario<select id="start-scenario"><option value="revival">Riverfront Revival</option><option value="rescue">Town in debt</option><option value="clean">Clean industrial valley</option><option value="mountain">Mountain borough</option><option value="sandbox">Open region</option></select></label></div><div class="welcome-options"><button class="primary" id="start-starter">Let’s build <span>↗</span></button><button id="continue-city">Continue my city</button><button id="start-empty">An empty canvas</button></div><small>Click to build · Right drag to explore · Scroll to zoom</small></div></dialog>
+    <dialog id="modal"><button class="close-modal" data-action="close-modal" aria-label="Close">×</button><div id="modal-content"></div></dialog>
+    <input id="import-file" type="file" accept=".json,application/json" hidden>
+    <noscript>Rivergate needs JavaScript enabled.</noscript>
+  </main>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

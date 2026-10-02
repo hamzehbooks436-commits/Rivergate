@@ -1,0 +1,14 @@
+import {N,SERVICES,DISTRICTS} from './data.js';
+export const PARCEL=19, PARCELS=N/PARCEL;
+export const parcelOf=i=>Math.floor(i%N/PARCEL)+Math.floor(Math.floor(i/N)/PARCEL)*PARCELS;
+export const parcelXY=id=>({x:id%PARCELS,z:Math.floor(id/PARCELS)});
+export const owned=(s,i)=>s.owned.includes(parcelOf(i));
+export const districtOf=(s,i)=>s.districts[parcelOf(i)]||'mixed';
+export function footprint(i,size=1,depth=size){const x=i%N,z=Math.floor(i/N);if(i<0||x+size>N||z+depth>N)return [];const cells=[];for(let dz=0;dz<depth;dz++)for(let dx=0;dx<size;dx++)cells.push(i+dz*N+dx);return cells;}
+export function buildingCells(b){return footprint(b.i,b.size||1,b.depth||b.size||1);}
+export function perimeter(b){const cells=new Set(buildingCells(b)),outside=new Set();for(const i of cells){const x=i%N,z=Math.floor(i/N);for(const j of [x>0?i-1:-1,x<N-1?i+1:-1,z>0?i-N:-1,z<N-1?i+N:-1])if(j>=0&&!cells.has(j))outside.add(j);}return [...outside];}
+export function reserve(s,b){for(const i of buildingCells(b)){s.tiles[i].building=b.id;s.tiles[i].zone=b.zone;s.tiles[i].type=0;if(b.zone)s.tiles[i].density=Math.max(s.tiles[i].density,b.targetLevel);}}
+export function parcelPrice(s,id){const {x,z}=parcelXY(id);return Math.round((7000+s.owned.length*1600+(x+z)*650)*(s.difficulty==='expert'?1.25:s.difficulty==='relaxed'?.8:1));}
+export function canBuy(s,id){const {x,z}=parcelXY(id);return Number.isInteger(id)&&id>=0&&id<PARCELS*PARCELS&&!s.owned.includes(id)&&[[x-1,z],[x+1,z],[x,z-1],[x,z+1]].some(([a,b])=>a>=0&&b>=0&&a<PARCELS&&b<PARCELS&&s.owned.includes(a+b*PARCELS));}
+export function densityGate(s,n){if(n===1)return '';if(n===2&&s.stats.population<750)return 'Medium density requires 750 residents.';if(n===3&&(s.stats.population<10000||s.stats.happiness<65))return 'High density requires 10,000 residents and 65 happiness.';if(n===4&&(s.stats.population<75000||s.stats.happiness<80||s.profitMonths<12||!s.routes.some(r=>r.active&&r.riders>0)))return 'Skyscrapers require 75,000 residents, 80 happiness, 12 profitable months and used public transport.';return '';}
+export function districtGate(s,key){if(!DISTRICTS[key])return 'Choose a district character.';if(key==='garden'&&!s.projects.includes('stability'))return 'Complete Keep the lights on to unlock garden suburbs.';if(key==='university'&&(!s.projects.includes('community')||!s.buildings.some(b=>b.service==='education'&&b.status==='occupied'&&b.info.capacity>0)))return 'Complete A place to grow up and keep a school operating to unlock university quarters.';if(key==='shopping'&&s.stats.population<500)return 'Market districts require 500 residents.';if(key==='port'&&(!s.projects.includes('tradehub')||!s.freightTrains||!s.buildings.some(b=>b.service==='station'&&b.info.capacity>0)))return 'Complete Made here, shipped everywhere and maintain working rail freight to unlock industrial ports.';return '';}
