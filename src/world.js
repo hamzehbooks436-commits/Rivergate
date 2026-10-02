@@ -9,7 +9,7 @@ import {N,TILE,ZONES,SERVICES,DECORATIONS,MODES,clamp} from './data.js';
 import {buildingCells,footprint,owned,parcelOf,PARCEL,PARCELS,districtOf} from './region.js';
 import {batch} from './detail.js';
 import {moveVehicle} from './vehicle-motion.js';
-import {BUILDINGS as ARCHITECTURE_BUILDINGS} from '../Architecture Game/src/catalog.js';
+import {BUILDINGS as ARCHITECTURE_BUILDINGS} from './legacy/building-recipes.js';
 import {xy,index,neighbours} from './network.js';
 const cube=new THREE.BoxGeometry(1,1,1),materials=new Map(),dummy=new THREE.Object3D();
 function mat(color){if(!materials.has(color))materials.set(color,new THREE.MeshStandardMaterial({color,roughness:.9}));return materials.get(color);}
